@@ -11,16 +11,14 @@ class Ask < Formula
   depends_on "python@3.12"
 
   def install
-    # Install build dependencies first
-    system Formula["python@3.12"].opt_bin/"python3.12", "-m", "pip",
-           "install", *std_pip_args(prefix: libexec), "setuptools", "wheel"
+    # Use virtualenv with PEP 517 build
+    venv = virtualenv_create(libexec, "python3.12")
 
-    # Install the package and its dependencies
-    system Formula["python@3.12"].opt_bin/"python3.12", "-m", "pip",
-           "install", *std_pip_args(prefix: libexec), "."
+    # Install build backend
+    venv.pip_install "setuptools", "wheel"
 
-    # Create wrapper script
-    (bin/"ask").write_env_script(libexec/"bin/ask", PATH: "#{libexec}/bin:$PATH")
+    # Install the package
+    venv.pip_install_and_link buildpath
   end
 
   test do
