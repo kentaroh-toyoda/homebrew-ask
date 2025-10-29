@@ -14,19 +14,15 @@ class Ask < Formula
     # Use virtualenv with PEP 517 build
     venv = virtualenv_create(libexec, Formula["python@3.12"].opt_bin/"python3.12")
 
-    # Install build backend
+    # Install build backend first
     venv.pip_install "setuptools"
     venv.pip_install "wheel"
 
-    # Install dependencies
-    venv.pip_install "requests>=2.31.0"
-    venv.pip_install "python-dotenv>=1.0.0"
-    venv.pip_install "rich>=13.7.0"
-    venv.pip_install "prompt_toolkit>=3.0.43"
-    venv.pip_install "keyring>=24.0.0"
+    # Install the package WITHOUT --no-deps so all dependencies are resolved
+    system libexec/"bin/pip", "install", "--no-cache-dir", buildpath
 
-    # Install the package
-    venv.pip_install_and_link buildpath
+    # Create the symlink
+    bin.install_symlink libexec/"bin/ask"
   end
 
   test do
