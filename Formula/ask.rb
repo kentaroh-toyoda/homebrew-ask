@@ -11,7 +11,19 @@ class Ask < Formula
   depends_on "python@3.12"
 
   def install
-    virtualenv_install_with_resources
+    # Create virtualenv and install package with dependencies
+    venv = virtualenv_create(libexec, "python3.12")
+    system libexec/"bin/pip", "install", "-v", "--no-deps",
+           "--ignore-installed",
+           buildpath
+    system libexec/"bin/pip", "install", "-v",
+           "requests>=2.31.0",
+           "python-dotenv>=1.0.0",
+           "rich>=13.7.0",
+           "prompt_toolkit>=3.0.43",
+           "keyring>=24.0.0"
+
+    bin.install_symlink libexec/"bin/ask"
   end
 
   test do
