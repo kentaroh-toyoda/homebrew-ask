@@ -11,14 +11,13 @@ class Ask < Formula
   depends_on "python@3.12"
 
   def install
-    # Use virtualenv with PEP 517 build
-    venv = virtualenv_create(libexec, Formula["python@3.12"].opt_bin/"python3.12")
+    # Create virtualenv WITH pip (not using Homebrew's helper which excludes pip)
+    system Formula["python@3.12"].opt_bin/"python3.12", "-m", "venv", libexec
 
-    # Install build backend first
-    venv.pip_install "setuptools"
-    venv.pip_install "wheel"
+    # Upgrade pip and install setuptools/wheel
+    system libexec/"bin/pip", "install", "--upgrade", "pip", "setuptools", "wheel"
 
-    # Install the package WITHOUT --no-deps so all dependencies are resolved
+    # Install the package and all its dependencies
     system libexec/"bin/pip", "install", "--no-cache-dir", buildpath
 
     # Create the symlink
