@@ -12,10 +12,11 @@ class Ask < Formula
 
   def install
     # Use virtualenv with PEP 517 build
-    venv = virtualenv_create(libexec, "python3.12")
+    venv = virtualenv_create(libexec, Formula["python@3.12"].opt_bin/"python3.12")
 
     # Install build backend
-    venv.pip_install "setuptools", "wheel"
+    venv.pip_install "setuptools"
+    venv.pip_install "wheel"
 
     # Install the package
     venv.pip_install_and_link buildpath
