@@ -18,6 +18,13 @@ class Ask < Formula
     venv.pip_install "setuptools"
     venv.pip_install "wheel"
 
+    # Install dependencies
+    venv.pip_install "requests>=2.31.0"
+    venv.pip_install "python-dotenv>=1.0.0"
+    venv.pip_install "rich>=13.7.0"
+    venv.pip_install "prompt_toolkit>=3.0.43"
+    venv.pip_install "keyring>=24.0.0"
+
     # Install the package
     venv.pip_install_and_link buildpath
   end
