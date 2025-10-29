@@ -11,11 +11,15 @@ class Ask < Formula
   depends_on "python@3.12"
 
   def install
-    # Use standard pip installation with virtualenv
+    # Install build dependencies first
+    system Formula["python@3.12"].opt_bin/"python3.12", "-m", "pip",
+           "install", *std_pip_args(prefix: libexec), "setuptools", "wheel"
+
+    # Install the package and its dependencies
     system Formula["python@3.12"].opt_bin/"python3.12", "-m", "pip",
            "install", *std_pip_args(prefix: libexec), "."
 
-    # Create symlink
+    # Create wrapper script
     (bin/"ask").write_env_script(libexec/"bin/ask", PATH: "#{libexec}/bin:$PATH")
   end
 
