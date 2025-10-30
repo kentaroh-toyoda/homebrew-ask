@@ -3,8 +3,8 @@ class Ask < Formula
 
   desc "Terminal-based chat tool for interacting with LLMs via OpenRouter API"
   homepage "https://github.com/kentaroh-toyoda/terminal-chat"
-  url "https://github.com/kentaroh-toyoda/terminal-chat/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "283236d50acdb2a6860bbe1fe5033ca90bcb1eb97f7d76edf5c79a535ea56192"
+  url "https://github.com/kentaroh-toyoda/terminal-chat/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "316ac01605b382088334a9372101fbad6f24026fb77ea8609cad09d03a610a2e"
   license "MIT"
   head "https://github.com/kentaroh-toyoda/terminal-chat.git", branch: "main"
 
